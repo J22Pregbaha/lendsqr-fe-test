@@ -3,6 +3,7 @@ import './login.scss'
 import '../../styles/globals.scss'
 import { useCustomMediaQuery } from '../../hooks/useCustomMediaQuery'
 import { PageTitle } from '../../components/PageTitle'
+import { useViewportHeight } from '../../hooks/useViewportHeight'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -14,9 +15,10 @@ export default function LoginPage() {
     e.preventDefault()
     console.log('Login submitted', { email, password })
   }
+  useViewportHeight()
 
   return (
-    <>
+    <div className="h-screen-dynamic">
       <PageTitle
         title="Login"
         description="Login Page"
@@ -90,6 +92,6 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
