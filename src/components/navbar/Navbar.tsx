@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './navbar.scss'
 import '../../styles/globals.scss'
 
@@ -9,11 +9,21 @@ const Navbar: React.FC = () => {
     console.log('Search query:', searchQuery)
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSearch()
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (searchQuery && e.key === 'Enter') {
+        handleSearch()
+      }
     }
-  }
+
+    // Attach the event listener
+    window.addEventListener('keydown', handleKeyPress)
+
+    // Clean up the event listener on unmount
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [searchQuery])
 
   return (
     <nav className="navbar">
@@ -33,7 +43,6 @@ const Navbar: React.FC = () => {
               placeholder="Search for anything"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyPress={handleKeyPress}
               className="search-input"
             />
             <button onClick={handleSearch} className="search-button">
@@ -47,12 +56,7 @@ const Navbar: React.FC = () => {
         <div className="navbar-right">
           <a href="#" className="docs-link">Docs</a>
 
-          <button className="notification-button">
-            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20.7 18.5L19.5 17.3V12.5C19.5 9.43 17.59 6.86 14.75 6.18V5.5C14.75 4.67 14.08 4 13.25 4C12.42 4 11.75 4.67 11.75 5.5V6.18C8.91 6.86 7 9.43 7 12.5V17.3L5.8 18.5C5.29 19.01 5.65 20 6.38 20H20.13C20.86 20 21.22 19.01 20.7 18.5ZM13.25 23C14.36 23 15.25 22.11 15.25 21H11.25C11.25 22.11 12.14 23 13.25 23Z" fill="currentColor"/>
-            </svg>
-            <span className="notification-badge"></span>
-          </button>
+          <img src="/images/notification-bell.svg" />
 
           <div className="user-profile">
             <img

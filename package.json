@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.14",
+    "axios": "^1.13.2",
     "eslint-plugin-react": "^7.37.5",
     "lucide-react": "^0.562.0",
     "react": "^19.2.0",

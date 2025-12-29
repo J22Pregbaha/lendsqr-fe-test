@@ -1,6 +1,9 @@
 import React from 'react'
-import { Users, UserCheck, FileText, PiggyBank } from 'lucide-react'
 import './user-stats.scss'
+import UsersCard from '../../assets/users-card.svg'
+import ActiveUsersCard from '../../assets/active-users-card.svg'
+import LoanUsersCard from '../../assets/loan-users-card.svg'
+import SavingsUsersCard from '../../assets/savings-users-card.svg'
 
 interface StatCardProps {
   icon: React.ReactNode
@@ -29,31 +32,31 @@ const UserStats: React.FC = () => {
 
       <div className="user-stats__grid">
         <StatCard
-          icon={<Users size={22} />}
+          icon={<img src={UsersCard} className='card-icon' />}
           label="USERS"
           value="2,453"
-          bgColor="#F5E8FF"
+          bgColor="#FCE8FF"
         />
 
         <StatCard
-          icon={<UserCheck size={22} />}
+          icon={<img src={ActiveUsersCard} className='card-icon' />}
           label="ACTIVE USERS"
           value="2,453"
-          bgColor="#E7F0FF"
+          bgColor="#EEE8FF"
         />
 
         <StatCard
-          icon={<FileText size={22} />}
+          icon={<img src={LoanUsersCard} className='card-icon' />}
           label="USERS WITH LOANS"
           value="12,453"
-          bgColor="#FEF0E6"
+          bgColor="#FEEFEC"
         />
 
         <StatCard
-          icon={<PiggyBank size={22} />}
+          icon={<img src={SavingsUsersCard} className='card-icon' />}
           label="USERS WITH SAVINGS"
           value="102,453"
-          bgColor="#FFE9ED"
+          bgColor="#FFEBF0"
         />
       </div>
     </section>
