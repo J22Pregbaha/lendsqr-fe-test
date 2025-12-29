@@ -1,73 +1,85 @@
-# React + TypeScript + Vite
+## 📊 Lendsqr Frontend Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive admin dashboard meticulously crafted to match the **Lendsqr design system**. This project prioritizes clean architecture, reusable UI patterns, and a "pixel-conscious" approach to frontend engineering.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Key Features
 
-## React Compiler
+* **Type-Safe Excellence:** Built with TypeScript for predictable, error-resistant development.
+* **Scalable Styling:** SCSS implemented with BEM-style architecture to prevent global style leakage.
+* **Performance First:** Fast builds and Hot Module Replacement (HMR) powered by Vite.
+* **UX Focused:** * Independent sidebar and content scrolling.
+* Viewport-locked layout to prevent "scroll bleed."
+* Custom hooks for responsive breakpoints.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+* **Modular Design:** Data-driven components designed for easy API integration.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Follow these steps to get the project up and running on your local machine.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Prerequisites
+
+* **Node.js** (v18 or higher)
+* **npm** or **yarn**
+
+### Installation & Local Development
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/your-username/lendsqr-frontend.git
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+2. **Install dependencies**
+```bash
+cd lendsqr-frontend
+npm install
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+
+
+3. **Start the development server**
+```bash
+npm start
+
+```
+
+
+
+🔗 The app will be live at: `http://localhost:3000`
+
+---
+
+## 🛠 Tech Stack & Conventions
+
+| Category | Technology |
+| --- | --- |
+| **Framework** | React 18 (Functional Components) |
+| **Language** | TypeScript (Strict Mode) |
+| **Build Tool** | Vite |
+| **Styling** | SCSS (Modules/BEM) |
+| **State/Logic** | Custom Hooks |
+
+**Core Principles:**
+
+* **No Unnecessary Re-renders:** Optimized component lifecycle.
+* **Functional Patterns:** Heavy use of hooks and clean functional components.
+* **Design Fidelity:** Strict adherence to Figma spacing and typography.
+
+---
+
+## 👤 Author
+
+**Joshua Pregbaha** *Frontend Engineer | React • TypeScript • UI Architecture*
+
+---
+
+## 📝 Final Notes
+
+This project was built as a technical assessment. It prioritizes **clarity over cleverness**, ensuring that any developer stepping into the codebase can understand the flow and start contributing immediately.
