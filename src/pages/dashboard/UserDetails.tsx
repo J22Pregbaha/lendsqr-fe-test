@@ -4,18 +4,13 @@ import './user-details.scss'
 import DashboardLayout from '../../layouts/DashboardLayout'
 import { useNavigate } from 'react-router-dom'
 import { routes } from '../../constants/routePath'
+import { useUser } from '../../contexts/UserInfoContext'
 
-interface UserDetailsData {
-  fullName: string;
-  userId: string;
+interface MockUserDetailsData {
   userTier: number;
   balance: string;
   accountNumber: string;
   bankName: string;
-  phoneNumber: string;
-  email: string;
-  bvn: string;
-  gender: string;
   maritalStatus: string;
   children: string;
   typeOfResidence: string;
@@ -30,19 +25,15 @@ interface UserDetailsData {
 
 const UserDetails: React.FC = () => {
   const navigate = useNavigate()
+  const { user } = useUser()
+
   const [activeTab, setActiveTab] = useState('general-details')
 
-  const userData: UserDetailsData = {
-    fullName: 'Grace Effiom',
-    userId: 'LSQFF587g90',
+  const userData: MockUserDetailsData = {
     userTier: 1,
     balance: '₦200,000.00',
     accountNumber: '9912345678',
     bankName: 'Providus Bank',
-    phoneNumber: '07060780922',
-    email: 'grace@gmail.com',
-    bvn: '07060780922',
-    gender: 'Female',
     maritalStatus: 'Single',
     children: 'None',
     typeOfResidence: 'Parent\'s Apartment',
@@ -105,8 +96,8 @@ const UserDetails: React.FC = () => {
                 <User size={40} />
               </div>
               <div className="user-basic-info">
-                <h2>{userData.fullName}</h2>
-                <p className="user-id">{userData.userId}</p>
+                <h2>{user.name}</h2>
+                <p className="user-id">{user.id}</p>
               </div>
             </div>
 
@@ -144,23 +135,23 @@ const UserDetails: React.FC = () => {
             <div className="info-grid">
               <div className="info-item">
                 <p className="info-label">FULL NAME</p>
-                <p className="info-value">{userData.fullName}</p>
+                <p className="info-value">{user.name}</p>
               </div>
               <div className="info-item">
                 <p className="info-label">PHONE NUMBER</p>
-                <p className="info-value">{userData.phoneNumber}</p>
+                <p className="info-value">{user.phoneNumber}</p>
               </div>
               <div className="info-item">
                 <p className="info-label">EMAIL ADDRESS</p>
-                <p className="info-value">{userData.email}</p>
+                <p className="info-value">{user.email}</p>
               </div>
               <div className="info-item">
                 <p className="info-label">BVN</p>
-                <p className="info-value">{userData.bvn}</p>
+                <p className="info-value">{user.bvn}</p>
               </div>
               <div className="info-item">
                 <p className="info-label">GENDER</p>
-                <p className="info-value">{userData.gender}</p>
+                <p className="info-value">{user.gender}</p>
               </div>
               <div className="info-item">
                 <p className="info-label">MARITAL STATUS</p>

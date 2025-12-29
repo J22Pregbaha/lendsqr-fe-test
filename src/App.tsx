@@ -5,6 +5,7 @@ import UserDetailsPage from './pages/dashboard/UserDetails'
 import { HelmetProvider } from 'react-helmet-async'
 import { routes } from './constants/routePath'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { UserProvider } from './contexts/UserInfoContext'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,20 +21,22 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
-        <Routes>
-          <Route
-            path="/"
-            element={<LoginPage />}
-          />
-          <Route
-            path={routes.USERS}
-            element={<UsersPage />}
-          />
-          <Route
-            path={routes.USER_DETAILS}
-            element={<UserDetailsPage />}
-          />
-        </Routes>
+        <UserProvider>
+          <Routes>
+            <Route
+              path="/"
+              element={<LoginPage />}
+            />
+            <Route
+              path={routes.USERS}
+              element={<UsersPage />}
+            />
+            <Route
+              path={routes.USER_DETAILS}
+              element={<UserDetailsPage />}
+            />
+          </Routes>
+        </UserProvider>
       </HelmetProvider>
     </QueryClientProvider>
   )
