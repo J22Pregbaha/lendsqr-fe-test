@@ -101,7 +101,7 @@ const UserDetails: React.FC = () => {
         <div className="user-summary-card">
           <div className='summary-details'>
             <div className="user-profile-section">
-              <div className="user-avatar">
+              <div className="user-picture">
                 <User size={40} />
               </div>
               <div className="user-basic-info">
