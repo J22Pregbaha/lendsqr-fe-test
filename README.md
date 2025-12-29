@@ -74,6 +74,18 @@ yarn start
 
 ---
 
+## 🔐 Environment Configuration
+
+This project loads users data from a mock API.
+
+The required environment variable is **intentionally not committed** to this repository.
+
+```env
+VITE_MOCK_API_ID=<mock-api-project-id>
+```
+
+---
+
 ## 👤 Author
 
 **Joshua Pregbaha** *Frontend Engineer | React • TypeScript • UI Architecture*
