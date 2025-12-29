@@ -53,6 +53,11 @@
   }
 }
 
+.card-icon {
+  height: 18px;
+  width: 18px;
+}
+
 @media (max-width: 1049px) {
   .user-stats__grid {
     grid-template-columns: repeat(2, 1fr);
