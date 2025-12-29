@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import type { User } from '../../types/types'
 import './table.scss'
 
@@ -19,9 +19,32 @@ const UserTable = ({
   setRecordsPerPage,
   loading = false
 }: Props) => {
-  const totalRecords = 100
+  const [showFilter, setShowFilter] = useState(false)
+  const [activeMenuId, setActiveMenuId] = useState<string | null>(null)
+  const filterRef = useRef<HTMLDivElement>(null)
+  const menuRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
 
+  const totalRecords = 100
   const totalPages = Math.ceil(totalRecords / recordsPerPage)
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
+        setShowFilter(false)
+      }
+
+      if (activeMenuId) {
+        const menuRef = menuRefs.current[activeMenuId]
+        if (menuRef && !menuRef.contains(event.target as Node)) {
+          setActiveMenuId(null)
+        }
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [activeMenuId])
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
@@ -32,6 +55,10 @@ const UserTable = ({
   const handleRecordsPerPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setRecordsPerPage(Number(e.target.value))
     setCurrentPage(1)
+  }
+
+  const toggleMenu = (userId: string) => {
+    setActiveMenuId(activeMenuId === userId ? null : userId)
   }
 
   const getPageNumbers = () => {
@@ -94,18 +121,64 @@ const UserTable = ({
               <th>
                 <div className="th-content">
                   ORGANIZATION
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M5 6L8 3L11 6" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M5 10L8 13L11 10" stroke="currentColor" strokeWidth="1.5"/>
-                  </svg>
+                  <button
+                    className="filter-icon"
+                    onClick={() => setShowFilter(!showFilter)}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    </svg>
+                  </button>
                 </div>
+                {showFilter && (
+                  <div className="filter-dropdown" ref={filterRef}>
+                    <div className="filter-group">
+                      <label>Organization</label>
+                      <select>
+                        <option value="">Select</option>
+                        <option value="lendsqr">Lendsqr</option>
+                        <option value="irorun">Irorun</option>
+                        <option value="lendstar">Lendstar</option>
+                      </select>
+                    </div>
+                    <div className="filter-group">
+                      <label>Username</label>
+                      <input type="text" placeholder="User" />
+                    </div>
+                    <div className="filter-group">
+                      <label>Email</label>
+                      <input type="email" placeholder="Email" />
+                    </div>
+                    <div className="filter-group">
+                      <label>Date</label>
+                      <input type="date" placeholder="Date" />
+                    </div>
+                    <div className="filter-group">
+                      <label>Phone Number</label>
+                      <input type="tel" placeholder="Phone Number" />
+                    </div>
+                    <div className="filter-group">
+                      <label>Status</label>
+                      <select>
+                        <option value="">Select</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="pending">Pending</option>
+                        <option value="blacklisted">Blacklisted</option>
+                      </select>
+                    </div>
+                    <div className="filter-actions">
+                      <button className="btn-reset">Reset</button>
+                      <button className="btn-filter">Filter</button>
+                    </div>
+                  </div>
+                )}
               </th>
               <th>
                 <div className="th-content">
                   USERNAME
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M5 6L8 3L11 6" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M5 10L8 13L11 10" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                   </svg>
                 </div>
               </th>
@@ -113,8 +186,7 @@ const UserTable = ({
                 <div className="th-content">
                   EMAIL
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M5 6L8 3L11 6" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M5 10L8 13L11 10" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                   </svg>
                 </div>
               </th>
@@ -122,8 +194,7 @@ const UserTable = ({
                 <div className="th-content">
                   PHONE NUMBER
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M5 6L8 3L11 6" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M5 10L8 13L11 10" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                   </svg>
                 </div>
               </th>
@@ -131,8 +202,7 @@ const UserTable = ({
                 <div className="th-content">
                   DATE JOINED
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M5 6L8 3L11 6" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M5 10L8 13L11 10" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                   </svg>
                 </div>
               </th>
@@ -140,8 +210,7 @@ const UserTable = ({
                 <div className="th-content">
                   STATUS
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M5 6L8 3L11 6" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M5 10L8 13L11 10" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                   </svg>
                 </div>
               </th>
@@ -165,13 +234,48 @@ const UserTable = ({
                     </span>
                   </td>
                   <td>
-                    <button className="menu-btn">
-                      <svg width="4" height="16" viewBox="0 0 4 16" fill="none">
-                        <circle cx="2" cy="2" r="2" fill="currentColor"/>
-                        <circle cx="2" cy="8" r="2" fill="currentColor"/>
-                        <circle cx="2" cy="14" r="2" fill="currentColor"/>
-                      </svg>
-                    </button>
+                    <div className="action-menu-wrapper">
+                      <button
+                        className="menu-btn"
+                        onClick={() => toggleMenu(user.id)}
+                      >
+                        <svg width="4" height="16" viewBox="0 0 4 16" fill="none">
+                          <circle cx="2" cy="2" r="2" fill="currentColor"/>
+                          <circle cx="2" cy="8" r="2" fill="currentColor"/>
+                          <circle cx="2" cy="14" r="2" fill="currentColor"/>
+                        </svg>
+                      </button>
+                      {activeMenuId === user.id && (
+                        <div
+                          className="action-menu"
+                          ref={(el) => {
+                            menuRefs.current[user.id] = el
+                          }}
+                        >
+                          <button className="action-item">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                              <path d="M8 3.5C5.5 3.5 3.5 5.5 3.5 8C3.5 10.5 5.5 12.5 8 12.5C10.5 12.5 12.5 10.5 12.5 8C12.5 5.5 10.5 3.5 8 3.5Z" stroke="currentColor" strokeWidth="1.2"/>
+                              <path d="M8 6V8L9.5 9.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                            </svg>
+                            View Details
+                          </button>
+                          <button className="action-item">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                              <path d="M8 12C6.34315 12 5 10.6569 5 9C5 7.34315 6.34315 6 8 6C9.65685 6 11 7.34315 11 9C11 10.6569 9.65685 12 8 12Z" stroke="currentColor" strokeWidth="1.2"/>
+                              <path d="M8 4V2M12 5L13.5 3.5M12 9H14M4 9H2M4 5L2.5 3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                            </svg>
+                            Blacklist User
+                          </button>
+                          <button className="action-item">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                              <path d="M8 3.5C5.5 3.5 3.5 5.5 3.5 8C3.5 10.5 5.5 12.5 8 12.5C10.5 12.5 12.5 10.5 12.5 8" stroke="currentColor" strokeWidth="1.2"/>
+                              <path d="M12 4L8 8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                            </svg>
+                            Activate User
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))
