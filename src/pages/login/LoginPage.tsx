@@ -4,16 +4,31 @@ import '../../styles/globals.scss'
 import { useCustomMediaQuery } from '../../hooks/useCustomMediaQuery'
 import { PageTitle } from '../../components/PageTitle'
 import { useViewportHeight } from '../../hooks/useViewportHeight'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
+import { routes } from '../../constants/routePath'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const { isMediumScreen, isMobile } = useCustomMediaQuery()
+  const navigate = useNavigate()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log('Login submitted', { email, password })
+
+    if (!email) {
+      toast.error('Email is required.')
+      return
+    }
+    if (!password) {
+      toast.error('Password is required.')
+      return
+    }
+
+    navigate(routes.USERS)
   }
   useViewportHeight()
 

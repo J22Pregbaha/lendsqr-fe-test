@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import type { User } from '../../types/types'
 import './table.scss'
+import { formatDateShortComma } from '../../utils/helperFn'
 
 interface Props {
   users: User[]
@@ -227,7 +228,7 @@ const UserTable = ({
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.phoneNumber}</td>
-                  <td>{user.createdAt}</td>
+                  <td>{formatDateShortComma(user.createdAt, true)}</td>
                   <td>
                     <span className={'status status-active'}>
                       {'Active'}

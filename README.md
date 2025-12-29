@@ -25,7 +25,7 @@ Follow these steps to get the project up and running on your local machine.
 ### Prerequisites
 
 * **Node.js** (v18 or higher)
-* **npm** or **yarn**
+* **yarn**
 
 ### Installation & Local Development
 
@@ -39,14 +39,14 @@ git clone https://github.com/your-username/lendsqr-frontend.git
 2. **Install dependencies**
 ```bash
 cd lendsqr-frontend
-npm install
+yarn add
 
 ```
 
 
 3. **Start the development server**
 ```bash
-npm start
+yarn start
 
 ```
 

@@ -4,13 +4,17 @@ import DashboardLayout from '../../layouts/DashboardLayout'
 import UserStats from './UserStats'
 import { useUsers } from '../../hooks/useUsers'
 import UserTable from '../../components/table/UserTable'
+import { handleApiError } from '../../utils/handleApiError'
+import type { AxiosError } from 'axios'
 
 export default function LoginPage() {
 
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(10)
 
-  const { data, isLoading } = useUsers(page, limit)
+  const { data, isLoading } = useUsers(page, limit, {
+    onError: (err: AxiosError) => handleApiError(err),
+  })
 
   return (
     <DashboardLayout>
