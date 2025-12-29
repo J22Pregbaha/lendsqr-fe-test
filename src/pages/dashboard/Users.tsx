@@ -11,7 +11,7 @@ import { useUser } from '../../contexts/UserInfoContext'
 import { useNavigate } from 'react-router-dom'
 import { routes } from '../../constants/routePath'
 
-export default function LoginPage() {
+export default function UsersPage() {
   const { setUser } = useUser()
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(10)

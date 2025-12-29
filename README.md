@@ -39,7 +39,7 @@ git clone https://github.com/your-username/lendsqr-frontend.git
 2. **Install dependencies**
 ```bash
 cd lendsqr-frontend
-yarn add
+yarn install
 
 ```
 
