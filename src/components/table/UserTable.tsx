@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import type { User } from '../../types/types'
 import './table.scss'
+import { formatDateShortComma } from '../../utils/helperFn'
 
 interface Props {
   users: User[]
@@ -9,6 +10,7 @@ interface Props {
   recordsPerPage: number
   setRecordsPerPage: (cp: number) => void
   loading?: boolean
+  onRowClick?: (user: User) => void
 }
 
 const UserTable = ({
@@ -17,7 +19,8 @@ const UserTable = ({
   setCurrentPage,
   recordsPerPage,
   setRecordsPerPage,
-  loading = false
+  loading = false,
+  onRowClick
 }: Props) => {
   const [showFilter, setShowFilter] = useState(false)
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null)
@@ -57,8 +60,15 @@ const UserTable = ({
     setCurrentPage(1)
   }
 
-  const toggleMenu = (userId: string) => {
+  const toggleMenu = (userId: string, event: React.MouseEvent) => {
+    event.stopPropagation()
     setActiveMenuId(activeMenuId === userId ? null : userId)
+  }
+
+  const handleRowClick = (user: User) => {
+    if (onRowClick) {
+      onRowClick(user)
+    }
   }
 
   const getPageNumbers = () => {
@@ -222,12 +232,16 @@ const UserTable = ({
               renderSkeletonRows()
             ) : (
               users.map((user) => (
-                <tr key={user.id}>
+                <tr
+                  key={user.id}
+                  onClick={() => handleRowClick(user)}
+                  className={onRowClick ? 'clickable-row' : ''}
+                >
                   <td>{'organization'}</td>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.phoneNumber}</td>
-                  <td>{user.createdAt}</td>
+                  <td>{formatDateShortComma(user.createdAt, true)}</td>
                   <td>
                     <span className={'status status-active'}>
                       {'Active'}
@@ -237,7 +251,7 @@ const UserTable = ({
                     <div className="action-menu-wrapper">
                       <button
                         className="menu-btn"
-                        onClick={() => toggleMenu(user.id)}
+                        onClick={(e) => toggleMenu(user.id, e)}
                       >
                         <svg width="4" height="16" viewBox="0 0 4 16" fill="none">
                           <circle cx="2" cy="2" r="2" fill="currentColor"/>

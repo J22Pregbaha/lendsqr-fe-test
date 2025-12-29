@@ -25,7 +25,7 @@ Follow these steps to get the project up and running on your local machine.
 ### Prerequisites
 
 * **Node.js** (v18 or higher)
-* **npm** or **yarn**
+* **yarn**
 
 ### Installation & Local Development
 
@@ -39,14 +39,14 @@ git clone https://github.com/your-username/lendsqr-frontend.git
 2. **Install dependencies**
 ```bash
 cd lendsqr-frontend
-npm install
+yarn install
 
 ```
 
 
 3. **Start the development server**
 ```bash
-npm start
+yarn start
 
 ```
 
@@ -71,6 +71,18 @@ npm start
 * **No Unnecessary Re-renders:** Optimized component lifecycle.
 * **Functional Patterns:** Heavy use of hooks and clean functional components.
 * **Design Fidelity:** Strict adherence to Figma spacing and typography.
+
+---
+
+## 🔐 Environment Configuration
+
+This project loads users data from a mock API.
+
+The required environment variable is **intentionally not committed** to this repository.
+
+```env
+VITE_MOCK_API_ID=<mock-api-project-id>
+```
 
 ---
 
