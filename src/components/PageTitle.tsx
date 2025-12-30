@@ -8,7 +8,7 @@ export interface Props {
 }
 
 export const PageTitle: React.FC<Props> = ({ title, description, canonicalUrl }) => {
-  const fullTitle = `${title} | Lendersqr`
+  const fullTitle = `${title} | Lendsqr`
 
   return (
     <Helmet>
