@@ -6,6 +6,7 @@ import { HelmetProvider } from 'react-helmet-async'
 import { routes } from './constants/routePath'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { UserProvider } from './contexts/UserInfoContext'
+import { SidebarProvider } from './contexts/SidebarContext'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,22 +22,24 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
-        <UserProvider>
-          <Routes>
-            <Route
-              path="/"
-              element={<LoginPage />}
-            />
-            <Route
-              path={routes.USERS}
-              element={<UsersPage />}
-            />
-            <Route
-              path={routes.USER_DETAILS}
-              element={<UserDetailsPage />}
-            />
-          </Routes>
-        </UserProvider>
+        <SidebarProvider>
+          <UserProvider>
+            <Routes>
+              <Route
+                path="/"
+                element={<LoginPage />}
+              />
+              <Route
+                path={routes.USERS}
+                element={<UsersPage />}
+              />
+              <Route
+                path={routes.USER_DETAILS}
+                element={<UserDetailsPage />}
+              />
+            </Routes>
+          </UserProvider>
+        </SidebarProvider>
       </HelmetProvider>
     </QueryClientProvider>
   )

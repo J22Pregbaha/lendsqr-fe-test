@@ -16,7 +16,17 @@ body {
 }
 
 .login__logo {
-  width: 120px;
+  width: 173.76px;
+}
+
+@media (max-width: 1049px) {
+  .login__logo {
+    width: 120px;
+  }
+}
+
+.user-details-page {
+  font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .custom-scrollbar {

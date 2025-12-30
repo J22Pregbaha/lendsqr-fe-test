@@ -35,17 +35,18 @@ export default function UsersPage() {
         title="Users"
         description="View Users"
       />
-
-      <UserStats />
-      <UserTable
-        users={data}
-        currentPage={page}
-        setCurrentPage={setPage}
-        recordsPerPage={limit}
-        setRecordsPerPage={setLimit}
-        loading={isLoading}
-        onRowClick={onRowClick}
-      />
+      <div className='user-details-page'>
+        <UserStats />
+        <UserTable
+          users={data}
+          currentPage={page}
+          setCurrentPage={setPage}
+          recordsPerPage={limit}
+          setRecordsPerPage={setLimit}
+          loading={isLoading}
+          onRowClick={onRowClick}
+        />
+      </div>
     </DashboardLayout>
   )
 }

@@ -128,6 +128,20 @@
   color: #213F7D;
 }
 
+.sidenav-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    color: #213f7d;
+  }
+}
+
 @media (max-width: 1049px) {
   .navbar-container {
     gap: 1rem;

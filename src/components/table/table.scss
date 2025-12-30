@@ -273,11 +273,6 @@
           cursor: pointer;
           transition: background-color 0.2s, transform 0.1s;
           
-          &:hover {
-            background-color: #f9fafb;
-            transform: translateY(-1px);
-          }
-          
           &:active {
             transform: translateY(0);
           }
