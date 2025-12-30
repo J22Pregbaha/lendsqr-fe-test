@@ -1,11 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PageTitle } from '../../components/PageTitle'
 import DashboardLayout from '../../layouts/DashboardLayout'
 import UserStats from './UserStats'
 import { useUsers } from '../../hooks/useUsers'
 import UserTable from '../../components/table/UserTable'
 import { handleApiError } from '../../utils/handleApiError'
-import type { AxiosError } from 'axios'
 import type { User } from '../../types/types'
 import { useUser } from '../../contexts/UserInfoContext'
 import { useNavigate } from 'react-router-dom'
@@ -17,9 +16,13 @@ export default function UsersPage() {
   const [limit, setLimit] = useState(10)
   const navigate = useNavigate()
 
-  const { data, isLoading } = useUsers(page, limit, {
-    onError: (err: AxiosError) => handleApiError(err),
-  })
+  const { data, isLoading, isError, error } = useUsers(page, limit)
+
+  useEffect(() => {
+    if (isError && error) {
+      handleApiError(error)
+    }
+  }, [isError, error])
 
   const onRowClick = (user: User) => {
     setUser(user)
