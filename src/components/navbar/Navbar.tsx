@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import './navbar.scss'
 import '../../styles/globals.scss'
+import { useCustomMediaQuery } from '../../hooks/useCustomMediaQuery'
+import { Menu } from 'lucide-react'
+import { useSidebarContext } from '../../contexts/SidebarContext'
 
 const Navbar: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('')
+  const { isMediumScreen, isMobile } = useCustomMediaQuery()
+  const { mobileSidebarOpen, setMobileSidebarOpen } = useSidebarContext()
 
   const handleSearch = () => {
     console.log('Search query:', searchQuery)
@@ -69,10 +74,18 @@ const Navbar: React.FC = () => {
               <path d="M1 1L6 6L11 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
+
+          {(isMobile || isMediumScreen) && (
+            <button
+              className="sidenav-toggle-btn"
+              onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+              aria-label="Open navigation"
+            >
+              <Menu size={24} />
+            </button>
+          )}
         </div>
       </div>
-
-      <style>{}</style>
     </nav>
   )
 }

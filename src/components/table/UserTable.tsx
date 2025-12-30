@@ -13,6 +13,19 @@ interface Props {
   onRowClick?: (user: User) => void
 }
 
+const STATUSES = ['active', 'inactive', 'pending', 'blacklisted'] as const
+type UserStatus = typeof STATUSES[number]
+
+const getUserStatus = (seed: string): UserStatus => {
+  let hash = 0
+
+  for (let i = 0; i < seed.length; i++) {
+    hash = seed.charCodeAt(i) + ((hash << 5) - hash)
+  }
+
+  return STATUSES[Math.abs(hash) % STATUSES.length]
+}
+
 const UserTable = ({
   users,
   currentPage,
@@ -237,15 +250,21 @@ const UserTable = ({
                   onClick={() => handleRowClick(user)}
                   className={onRowClick ? 'clickable-row' : ''}
                 >
-                  <td>{'organization'}</td>
+                  <td>{'Mock organization'}</td>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.phoneNumber}</td>
                   <td>{formatDateShortComma(user.createdAt, true)}</td>
                   <td>
-                    <span className={'status status-active'}>
-                      {'Active'}
-                    </span>
+                    {(() => {
+                      const status = getUserStatus(user.id)
+
+                      return (
+                        <span className={`status status-${status}`}>
+                          {status.charAt(0).toUpperCase() + status.slice(1)}
+                        </span>
+                      )
+                    })()}
                   </td>
                   <td>
                     <div className="action-menu-wrapper">

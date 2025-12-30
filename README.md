@@ -12,8 +12,6 @@ A modern, responsive admin dashboard meticulously crafted to match the **Lendsqr
 * **UX Focused:** * Independent sidebar and content scrolling.
 * Viewport-locked layout to prevent "scroll bleed."
 * Custom hooks for responsive breakpoints.
-
-
 * **Modular Design:** Data-driven components designed for easy API integration.
 
 ---
