@@ -4,7 +4,7 @@ import './table.scss'
 import { formatDateShortComma } from '../../utils/helperFn'
 
 interface Props {
-  users: User[]
+  users: User[] | undefined
   currentPage: number
   setCurrentPage: (cp: number) => void
   recordsPerPage: number
@@ -27,7 +27,7 @@ const UserTable = ({
   const filterRef = useRef<HTMLDivElement>(null)
   const menuRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
 
-  const totalRecords = 100
+  const totalRecords = users ? 100 : 0
   const totalPages = Math.ceil(totalRecords / recordsPerPage)
 
   // Close dropdowns when clicking outside
@@ -228,9 +228,9 @@ const UserTable = ({
             </tr>
           </thead>
           <tbody>
-            {loading ? (
-              renderSkeletonRows()
-            ) : (
+            {loading && renderSkeletonRows()}
+
+            {!loading && users && users.length > 0 && (
               users.map((user) => (
                 <tr
                   key={user.id}
@@ -294,59 +294,71 @@ const UserTable = ({
                 </tr>
               ))
             )}
+
+            {!loading && (!users || users.length === 0) && (
+              <tr className="empty-state">
+                <td colSpan={7}>
+                  <div className="empty-state-content">
+                    <p>No users found</p>
+                  </div>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
 
-      <div className="pagination-container">
-        <div className="pagination-info">
-          <span>Showing</span>
-          <select
-            value={recordsPerPage}
-            onChange={handleRecordsPerPageChange}
-            disabled={loading}
-          >
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-            <option value={50}>50</option>
-            <option value={100}>100</option>
-          </select>
-          <span>out of {totalRecords}</span>
-        </div>
-
-        <div className="pagination-controls">
-          <button
-            className="pagination-btn"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1 || loading}
-          >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M8.5 3.5L5 7L8.5 10.5" stroke="currentColor" strokeWidth="2"/>
-            </svg>
-          </button>
-
-          {getPageNumbers().map((page, index) => (
-            <button
-              key={index}
-              className={`pagination-number ${page === currentPage ? 'active' : ''} ${page === '...' ? 'ellipsis' : ''}`}
-              onClick={() => typeof page === 'number' && handlePageChange(page)}
-              disabled={page === '...' || loading}
+      {users && (
+        <div className="pagination-container">
+          <div className="pagination-info">
+            <span>Showing</span>
+            <select
+              value={recordsPerPage}
+              onChange={handleRecordsPerPageChange}
+              disabled={loading}
             >
-              {page}
-            </button>
-          ))}
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+              <option value={50}>50</option>
+              <option value={100}>100</option>
+            </select>
+            <span>out of {totalRecords}</span>
+          </div>
 
-          <button
-            className="pagination-btn"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages || loading}
-          >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M5.5 3.5L9 7L5.5 10.5" stroke="currentColor" strokeWidth="2"/>
-            </svg>
-          </button>
+          <div className="pagination-controls">
+            <button
+              className="pagination-btn"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1 || loading}
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M8.5 3.5L5 7L8.5 10.5" stroke="currentColor" strokeWidth="2"/>
+              </svg>
+            </button>
+
+            {getPageNumbers().map((page, index) => (
+              <button
+                key={index}
+                className={`pagination-number ${page === currentPage ? 'active' : ''} ${page === '...' ? 'ellipsis' : ''}`}
+                onClick={() => typeof page === 'number' && handlePageChange(page)}
+                disabled={page === '...' || loading}
+              >
+                {page}
+              </button>
+            ))}
+
+            <button
+              className="pagination-btn"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages || loading}
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M5.5 3.5L9 7L5.5 10.5" stroke="currentColor" strokeWidth="2"/>
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

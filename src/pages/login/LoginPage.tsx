@@ -74,7 +74,6 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="form-input"
-                  required
                 />
               </div>
 
@@ -85,7 +84,6 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="form-input"
-                  required
                 />
                 <button
                   type="button"
