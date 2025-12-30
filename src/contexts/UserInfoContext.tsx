@@ -14,8 +14,17 @@ export interface UserInfoProviderProps {
   children: ReactNode;
 }
 
-export const UserProvider: React.FC<UserInfoProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User>({
+const getInitialUser = (): User => {
+  try {
+    const storedUser = localStorage.getItem(USER_INFO)
+    if (storedUser) {
+      return JSON.parse(storedUser)
+    }
+  } catch (error) {
+    console.error('Error reading user from localStorage:', error)
+  }
+
+  return {
     id: '',
     name: '',
     email: '',
@@ -23,7 +32,11 @@ export const UserProvider: React.FC<UserInfoProviderProps> = ({ children }) => {
     createdAt: '',
     bvn: 0,
     gender: '',
-  })
+  }
+}
+
+export const UserProvider: React.FC<UserInfoProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<User>(getInitialUser)
 
   const setUserInfo = (user: User) => {
     setUser(user)
@@ -31,7 +44,7 @@ export const UserProvider: React.FC<UserInfoProviderProps> = ({ children }) => {
   }
 
   const resetContext = () => {
-    setUser({
+    const emptyUser = {
       id: '',
       name: '',
       email: '',
@@ -39,14 +52,15 @@ export const UserProvider: React.FC<UserInfoProviderProps> = ({ children }) => {
       createdAt: '',
       bvn: 0,
       gender: '',
-    })
+    }
+    setUser(emptyUser)
+    localStorage.removeItem(USER_INFO)
   }
 
   const contextValue = useMemo(
     () => ({
       user,
-      setUser,
-      setUserInfo,
+      setUser: setUserInfo,
       resetContext,
     }),
     [user]
