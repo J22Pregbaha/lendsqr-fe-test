@@ -344,6 +344,7 @@
         &:hover:not(:disabled):not(.ellipsis) {
           background: #f9fafb;
           border-color: #39cdcc;
+          color: #545f7d;
         }
 
         &:disabled {
